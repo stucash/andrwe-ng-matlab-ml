@@ -15,7 +15,10 @@ sim = 0;
 %               sigma
 %
 %
+g_value = (-1) * ((x1 - x2)' * (x1 - x2)) / (2 * (sigma^2)) ;
 
+% g_value = (-sum((x1-x2).^2)) / (2*(sigma^2));
+sim = exp(g_value);
 
 
 

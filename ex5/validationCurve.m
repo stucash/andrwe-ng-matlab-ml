@@ -40,14 +40,16 @@ error_val = zeros(length(lambda_vec), 1);
 %
 
 
-
-
-
-
-
-
-
-
+for i = 1:length(lambda_vec)
+    lambda = lambda_vec(i);
+    theta = trainLinearReg(X, y, lambda);
+    % when calculate errors, lambda is not needed.
+    % lambda is needed to train theta according to a modified version 
+    % of cost (training error) function, it is not used to calculate
+    % errors in actual validation or test data set.
+    error_train(i) = linearRegCostFunction(X,y,theta, 0);
+    error_val(i) = linearRegCostFunction(Xval, yval, theta, 0);
+end
 % =========================================================================
 
 end
