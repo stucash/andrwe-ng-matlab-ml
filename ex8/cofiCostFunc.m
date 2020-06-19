@@ -40,19 +40,30 @@ Theta_grad = zeros(size(Theta));
 %                     partial derivatives w.r.t. to each element of Theta
 %
 
+ThetaX = X * Theta';  % num_movies x num_users
 
+% cost solution 1
+% cost = R.*(ThetaX - Y);  % num_movies x num_users
+% temp = (1/2) * (cost' * cost);
+% alternatively: 
+%    cost = ThetaX - Y; 
+%    temp = (1/2) * ((R.*cost)' * (R.*cost));
+% J = sum(diag(temp));
 
+% cost solution 2
+temp = (1/2) * (ThetaX - Y).^2;
+J = sum(sum(R.*temp)); 
 
+% regularised gradients
+X_grad = ((R.*(ThetaX - Y)) * Theta) + lambda*X;
+Theta_grad = ((R.*(ThetaX - Y))' * X) + lambda*Theta;
 
+% regularisation
 
+reg_term_Theta = (lambda/2) * sum(sum(Theta.^2));
+reg_term_X = (lambda/2) * sum(sum(X.^2));
 
-
-
-
-
-
-
-
+J = J  + reg_term_Theta + reg_term_X;
 
 
 % =============================================================
